@@ -27,7 +27,7 @@ dsk.loadScripts = async urls => {
     const error = await dsk.loadScript(urls[i]);
     if (error) append(error.stack);
   }
-  
+
   dsk.loadingScripts = false;
   dsk.scriptsLoaded = true;
   append(`Loaded: ${urls.length} scripts`);
@@ -52,13 +52,14 @@ dsk.init = () => {
     dsk.loadingScripts = true;
     append('Loading scripts ...');
 
-    fetch('https://cdn.jsdelivr.net/gh/discraa/DskDev@latest/scriptList.json')
+    fetch('https://raw.githack.com/discraa/DskDev/main/scriptList.json')
       .then(response => response.text())
-      .then(data => dsk.loadScripts(JSON.parse(data)))
+      .then(async data => {
+        await dsk.loadScripts(JSON.parse(data));
+        append('DskDev loaded, type /cmds for commands');
+      })
       .catch(error => console.error('Error loading file:', error));
   });
-
-  append('DskDev loaded, type /cmds for commands');
 };
 
 // Ensure load when in-game bc i'm lazy asf
