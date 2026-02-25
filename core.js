@@ -13,6 +13,12 @@ dsk.deleteCmd = prefix => {
   dsk.commands.delete(prefix);
 };
 
+dsk.appendWithColor = (msg, color) => {
+  color = color ?? '#0ff';
+  append(`<span color:${chroma(color).hex()}>${msg}</span>`);
+};
+dsk.localMsg = dsk.appendWithColor;
+
 dsk.loadScript = src => {
   return new Promise((res, rej) => {
     const script = document.createElement('script');
