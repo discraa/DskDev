@@ -31,7 +31,7 @@ dsk.loadScripts = async urls => {
 
 // Init shit, i think
 dsk.init = () => {
-  dsk.setCmd('/help', () => {
+  dsk.setCmd('/cmds', () => {
     append('Commands:');
     Array.from(dsk.commands.keys()).forEach(prefix => {
       append(prefix);
@@ -53,13 +53,13 @@ dsk.init = () => {
     dsk.scriptsLoaded = true;
     append('Scripts loaded');
 
-    // fetch('path/to/your/file.txt')
-    //   .then(response => response.text())
-    //   .then(data => dsk.loadScripts(JSON.parse(data)))
-    //   .catch(error => console.error('Error loading file:', error));
+    fetch('https://cdn.jsdelivr.net/gh/discraa/DskDev@latest/scriptList.json')
+      .then(response => response.text())
+      .then(data => dsk.loadScripts(JSON.parse(data)))
+      .catch(error => console.error('Error loading file:', error));
   });
 
-  append('DskDev loaded');
+  append('DskDev loaded, type /cmds for commands');
 };
 
 // Ensure load when in-game bc i'm lazy asf
