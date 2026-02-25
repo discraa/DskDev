@@ -3,6 +3,7 @@
 
 window.dsk = {};
 dsk.loadingScripts = false;
+dsk.scriptsLoaded = false;
 dsk.commands = new Map(); // Btw i removed `Map` from ml.mim.js
 
 dsk.setCmd = (prefix, callback) => {
@@ -38,15 +39,27 @@ dsk.init = () => {
   });
 
   dsk.setCmd('/load', async () => {
+    if (dsk.scriptsLoaded) {
+      append('Restart client to load scriprs again');
+      return;
+    }
+
     if (dsk.loadingScripts) return;
     dsk.loadingScripts = true;
     append('Loading scripts ...');
 
-    fetch('path/to/your/file.txt')
-      .then(response => response.text())
-      .then(data => dsk.loadScripts(JSON.parse(data)))
-      .catch(error => console.error('Error loading file:', error));
+    // Testing
+    dsk.loadingScripts = false;
+    dsk.scriptsLoaded = true;
+    append('Scripts loaded');
+
+    // fetch('path/to/your/file.txt')
+    //   .then(response => response.text())
+    //   .then(data => dsk.loadScripts(JSON.parse(data)))
+    //   .catch(error => console.error('Error loading file:', error));
   });
+
+  append('DskDev loaded');
 };
 
 // Ensure load when in-game bc i'm lazy asf
