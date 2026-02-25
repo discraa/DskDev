@@ -16,9 +16,9 @@ dsk.deleteCmd = prefix => {
 dsk.loadScript = src => {
   return new Promise((res, rej) => {
     const script = document.createElement('script');
+    script.onload = () => res();
+    script.onerror = err => rej(err);
     script.src = src;
-    script.onload = res;
-    script.onerror = rej;
     document.body.appendChild(script);
   });
 };
@@ -55,12 +55,11 @@ dsk.init = () => {
 
     fetch('https://raw.githack.com/discraa/DskDev/main/scriptList.json')
       .then(response => response.text())
-      .then(async data => {
-        await dsk.loadScripts(JSON.parse(data));
-        append('DskDev loaded, type /cmds for commands');
-      })
+      .then(async data => dsk.loadScripts(JSON.parse(data)))
       .catch(error => console.error('Error loading file:', error));
   });
+  
+  append('DskDev loaded, type /cmds for commands');
 };
 
 // Ensure load when in-game bc i'm lazy asf
