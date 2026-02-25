@@ -42,10 +42,12 @@ dsk.loadScripts = async urls => {
 
 // Default commands
 dsk.setCmd('/cmds', () => {
-  dsk.localMsg('Commands:', '#aaa');
-  Array.from(dsk.commands.keys()).forEach(prefix => {
-    dsk.localMsg(prefix, '#888');
-  });
+  dsk.localMsg('Commands:', '#888');
+  Array.from(dsk.commands.keys())
+    .filter(e => e !== '/cmds')
+    .forEach(prefix => {
+      dsk.localMsg(prefix, '#bbb');
+    });
 });
 
 dsk.setCmd('/load', async () => {
@@ -63,6 +65,29 @@ dsk.setCmd('/load', async () => {
     .then(async data => dsk.loadScripts(JSON.parse(data)))
     .catch(error => dsk.localMsg(`Eror loading file: ${error.stack}`, 'red'));
 });
+
+dsk.setCmd('eval', context => {
+  eval(context);
+});
+
+// Init ui things, called by end of `ml.min.js -> init_ui`
+dsk.initGui = () => {
+  dsk.execBtn = jv.Button.create(
+    jv.game_width - 31 - 30,
+    388.2,
+    26,
+    'R',
+    jv.stage,
+    26,
+  );
+  dsk.execBtn.on_click = () => {
+    const code = prompt('Execute Javascript');
+    if (code.trim() !== '') {
+      const result = eval(code);
+      if (result && result !== '') alert(result);
+    }
+  };
+};
 
 // Init shit, i think
 dsk.init = () => {
