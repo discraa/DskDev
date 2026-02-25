@@ -1,7 +1,7 @@
 // Core script to add-in certain features like commands and auto
 // load scripts that are in discraa's github.
 
-window.dsk = {};
+window.dsk = new EventEmitter3();
 dsk.loadingScripts = false;
 dsk.scriptsLoaded = false;
 dsk.commands = new Map(); // Btw i removed `Map` from ml.mim.js
@@ -34,41 +34,35 @@ dsk.loadScripts = async urls => {
   append(`Loaded: ${urls.length} scripts`);
 };
 
+// Default commands
+dsk.setCmd('/cmds', () => {
+  append('Commands:');
+  Array.from(dsk.commands.keys()).forEach(prefix => {
+    append(prefix);
+  });
+});
+
+dsk.setCmd('/load', async () => {
+  if (dsk.scriptsLoaded) {
+    append('Restart client to load scripts again');
+    return;
+  }
+
+  if (dsk.loadingScripts) return;
+  dsk.loadingScripts = true;
+  append('Loading scripts ...');
+
+  fetch('https://raw.githack.com/discraa/DskDev/main/scriptList.json')
+    .then(response => response.text())
+    .then(async data => dsk.loadScripts(JSON.parse(data)))
+    .catch(error => console.error('Error loading file:', error));
+});
+
 // Init shit, i think
 dsk.init = () => {
-  dsk.setCmd('/cmds', () => {
-    append('Commands:');
-    Array.from(dsk.commands.keys()).forEach(prefix => {
-      append(prefix);
-    });
-  });
-
-  dsk.setCmd('/load', async () => {
-    if (dsk.scriptsLoaded) {
-      append('Restart client to load scripts again');
-      return;
-    }
-
-    if (dsk.loadingScripts) return;
-    dsk.loadingScripts = true;
-    append('Loading scripts ...');
-
-    fetch('https://raw.githack.com/discraa/DskDev/main/scriptList.json')
-      .then(response => response.text())
-      .then(async data => dsk.loadScripts(JSON.parse(data)))
-      .catch(error => console.error('Error loading file:', error));
-  });
-  
-  append('DskDev loaded, type /cmds for commands');
+  // nothing yet
 };
 
-// Ensure load when in-game bc i'm lazy asf
-// (if we are in-game, lots of shit from client loaded already,
-// so we don't have to use our brains)
-dsk.loadInterval = setInterval(() => {
-  if (game_state === GAME_PLAYING) {
-    clearInterval(dsk.loadInterval);
-
-    dsk.init();
-  }
-}, 5);
+dsk.once('packet:accepted', () => {
+  append('DskDev loaded, type /cmds for commands');
+});
