@@ -16,6 +16,7 @@ dsk.deleteCmd = prefix => {
 dsk.loadScript = src => {
   return new Promise((res, rej) => {
     const script = document.createElement('script');
+    script.src = src;
     script.onload = res;
     script.onerror = rej;
     document.body.appendChild(script);
