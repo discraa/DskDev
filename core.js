@@ -37,31 +37,31 @@ dsk.loadScripts = async urls => {
 
   dsk.loadingScripts = false;
   dsk.scriptsLoaded = true;
-  append(`Loaded: ${urls.length} scripts`);
+  dsk.localMsg(`Loaded: ${urls.length} scripts`, 'lime');
 };
 
 // Default commands
 dsk.setCmd('/cmds', () => {
-  append('Commands:');
+  dsk.localMsg('Commands:', '#aaa');
   Array.from(dsk.commands.keys()).forEach(prefix => {
-    append(prefix);
+    dsk.localMsg(prefix, '#888');
   });
 });
 
 dsk.setCmd('/load', async () => {
   if (dsk.scriptsLoaded) {
-    append('Restart client to load scripts again');
+    dsk.localMsg('Restart client to load scripts again', 'orange');
     return;
   }
 
   if (dsk.loadingScripts) return;
   dsk.loadingScripts = true;
-  append('Loading scripts ...');
+  dsk.localMsg('Loading scripts ...', '#050');
 
   fetch('https://raw.githack.com/discraa/DskDev/main/scriptList.json')
     .then(response => response.text())
     .then(async data => dsk.loadScripts(JSON.parse(data)))
-    .catch(error => console.error('Error loading file:', error));
+    .catch(error => dsk.localMsg(`Eror loading file: ${error.stack}`, 'red'));
 });
 
 // Init shit, i think
@@ -70,5 +70,5 @@ dsk.init = () => {
 };
 
 dsk.once('postPacket:accepted', () => {
-  append('DskDev loaded, type /cmds for commands');
+  dsk.localMsg('DskDev loaded, type /cmds for commands', 'pink');
 });
