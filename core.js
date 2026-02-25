@@ -63,6 +63,6 @@ dsk.init = () => {
   // nothing yet
 };
 
-dsk.once('packet:accepted', () => {
+dsk.once('postPacket:accepted', () => {
   append('DskDev loaded, type /cmds for commands');
 });
