@@ -27,6 +27,10 @@ dsk.loadScripts = async urls => {
     const error = await dsk.loadScript(urls[i]);
     if (error) append(error.stack);
   }
+  
+  dsk.loadingScripts = false;
+  dsk.scriptsLoaded = true;
+  append(`Loaded: ${urls.length} scripts`);
 };
 
 // Init shit, i think
@@ -40,18 +44,13 @@ dsk.init = () => {
 
   dsk.setCmd('/load', async () => {
     if (dsk.scriptsLoaded) {
-      append('Restart client to load scriprs again');
+      append('Restart client to load scripts again');
       return;
     }
 
     if (dsk.loadingScripts) return;
     dsk.loadingScripts = true;
     append('Loading scripts ...');
-
-    // Testing
-    dsk.loadingScripts = false;
-    dsk.scriptsLoaded = true;
-    append('Scripts loaded');
 
     fetch('https://cdn.jsdelivr.net/gh/discraa/DskDev@latest/scriptList.json')
       .then(response => response.text())
