@@ -66,8 +66,12 @@ dsk.setCmd('/load', async () => {
     .catch(error => dsk.localMsg(`Eror loading file: ${error.stack}`, 'red'));
 });
 
-dsk.setCmd('eval', context => {
-  eval(context);
+dsk.setCmd('/eval', context => {
+  try {
+    eval(context);
+  } catch (err) {
+    dsk.localMsg(`Eval error: ${err.stack}`);
+  }
 });
 
 // Init ui things, called by end of `ml.min.js -> init_ui`
