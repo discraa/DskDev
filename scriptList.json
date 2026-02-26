@@ -6,7 +6,11 @@
   "https://raw.githack.com/discraa/DskDev/main/ui/CompactUI.js",
   "https://raw.githack.com/discraa/DskDev/main/ui/SkillIcons.js",
   
+  // Inventory Manager
   "https://raw.githack.com/discraa/DskDev/main/ui/InvManager.js",
+  
+  // Ability Manager
+  "https://raw.githack.com/discraa/DskDev/main/ui/AblManager.js",
   
   "https://raw.githack.com/discraa/DskDev/main/qol/Ginfo.js"
   
