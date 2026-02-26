@@ -1,4 +1,7 @@
 [
   "https://raw.githack.com/discraa/DskDev/main/utils.js",
+  
+  "https://raw.githack.com/discraa/DskDev/main/ui/BarPercentages.js",
+  "https://raw.githack.com/discraa/DskDev/main/ui/CompactUI.js",
   "https://raw.githack.com/discraa/DskDev/main/ui/SkillIcons.js"
 ]
