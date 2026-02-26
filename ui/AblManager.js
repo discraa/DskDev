@@ -3,6 +3,15 @@ dsk.ablManager = jv.Dialog.create(300, 240);
 /* just so that i don't have to type that much */
 const am = dsk.ablManager;
 
+dsk.setCmd('/abl', () => {
+  const visible = !am.visible;
+  am.visible = visible;
+  
+  const state = visible ? 'enabled' : 'disabled';
+  const color = visible ? '#5f5' : '#f55';
+  dsk.localMsg(`AblManager: ${state}`, color);
+});
+
 am.header = jv.text('Abilities', {
   font: '18px Verdana',
   fill: 0xffffff,
