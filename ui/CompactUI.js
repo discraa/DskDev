@@ -1,3 +1,6 @@
+jv.fps.visible = true;
+jv.ping.visible = true;
+
 dsk.on('postLoop', () => {
   if (game_state === GAME_PLAYING && myself) {
     if (jv.upgrade_add) {
