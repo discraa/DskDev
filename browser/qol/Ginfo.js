@@ -51,9 +51,9 @@ ginfo.formatTime = (ms) => {
 
 ginfo.update = () => {
 	if (!myself) {
-		requestAnimationFrame(ginfo.update);
 		ginfo.sessionStarted = false;
 		ginfo.sessionStartTime = 0;
+		requestAnimationFrame(ginfo.update);
 		return;
 	}
 
