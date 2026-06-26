@@ -28,7 +28,7 @@ ginfo.getData = () => {
 	return {
 		x: myself.x,
 		y: myself.y,
-		location: jv.map_title.text,
+		location: jv.map_title.text?.replaceAll(' ', ''),
 		direction: ginfo.directions[myself.dir],
 	};
 };
@@ -63,8 +63,7 @@ ginfo.update = () => {
 	}
 
 	const { x, y, location, direction } = ginfo.getData();
-	let text = '';
-	text = `@${location.replaceAll(' ', '')}(${x}, ${y})[${direction}]`;
+	let text = `@${location}(${x}, ${y})[${direction}]`;
 
 	if (ginfo.showTime) {
 		text += ` [${new Date().toLocaleTimeString()}]`;
